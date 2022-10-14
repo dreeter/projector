@@ -1,0 +1,7 @@
+#card-list {
+    display: flex;
+}
+
+.item {
+    margin: 1%;
+}
