@@ -5,3 +5,7 @@
 .item {
     margin: 1%;
 }
+
+mat-icon {
+    color: green;
+}

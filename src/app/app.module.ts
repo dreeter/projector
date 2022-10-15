@@ -26,11 +26,16 @@ import { TaskComponent } from './task/task.component';
 import { TaskItemComponent } from './task-item/task-item.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   MatFormFieldModule,
   MAT_FORM_FIELD_DEFAULT_OPTIONS,
 } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
+import { ProjectService } from './services/project.service';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -72,13 +77,19 @@ const appRoutes: Routes = [
     MatTabsModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatGridListModule,
+    FormsModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    FlexLayoutModule,
     RouterModule.forRoot(appRoutes),
   ],
   providers: [
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { appearance: 'fill', floatLabel: 'always' },
+      useValue: { appearance: 'fill' },
     },
+    ProjectService,
   ],
   bootstrap: [AppComponent],
 })

@@ -1,15 +1,68 @@
-<mat-form-field appearance="fill">
-  <mat-label>Input</mat-label>
-  <input matInput />
-</mat-form-field>
-<mat-form-field appearance="fill">
-  <mat-label>Select</mat-label>
-  <mat-select>
-    <mat-option value="one">First option</mat-option>
-    <mat-option value="two">Second option</mat-option>
-  </mat-select>
-</mat-form-field>
-<mat-form-field appearance="fill">
-  <mat-label>Textarea</mat-label>
-  <textarea matInput></textarea>
-</mat-form-field>
+<div>
+  <mat-card>
+    <mat-card-title> New Project </mat-card-title>
+
+    <mat-card-content>
+      <form
+        fxLayout="column"
+        fxLayout.lt-md="column"
+        [formGroup]="projectForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div fxLayout="row" fxLayout.lt-lg="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Project Title</mat-label>
+            <input matInput required formControlName="title" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Priority</mat-label>
+            <mat-select required formControlName="priority">
+              <mat-option value="one">First option</mat-option>
+              <mat-option value="two">Second option</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Owner</mat-label>
+            <mat-select required formControlName="owner">
+              <mat-option value="one">First option</mat-option>
+              <mat-option value="two">Second option</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayout.lt-lg="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Status</mat-label>
+            <mat-select required formControlName="status">
+              <mat-option value="one">First option</mat-option>
+              <mat-option value="two">Second option</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Due Date</mat-label>
+            <mat-select required formControlName="dueDate">
+              <mat-option value="one">First option</mat-option>
+              <mat-option value="two">Second option</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div id="project-description" fxLayout="row" fxLayout.="column">
+          <mat-form-field id="formfield" fxFlexFill appearance="fill">
+            <mat-label>Project Description</mat-label>
+            <textarea
+              matInput
+              required
+              formControlName="description"
+            ></textarea>
+          </mat-form-field>
+        </div>
+
+        <button type="submit" mat-raised-button color="primary">Create</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

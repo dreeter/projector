@@ -16,8 +16,14 @@
   z-index: 1;
 }
 
-#router-content {
-  display: inline-block;
-  width: 80%;
+/* #router-content {
+  display: flex;
   margin: 3%;
-}
+  width: 100%;
+} */
+
+/* mat-sidenav-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} */
