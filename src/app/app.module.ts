@@ -36,13 +36,15 @@ import {
 } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ProjectService } from './services/project.service';
+import { EditProjectComponent } from './edit-project/edit-project.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, pathMatch: 'full' },
   { path: 'newproject', component: NewProjectComponent, pathMatch: 'full' },
+  { path: 'editproject', component: EditProjectComponent, pathMatch: 'full' },
   { path: 'newtask', component: NewTaskComponent, pathMatch: 'full' },
-  { path: 'project', component: ProjectComponent, pathMatch: 'full' },
+  { path: 'project/:title', component: ProjectComponent, pathMatch: 'full' },
   { path: 'task', component: ProjectComponent, pathMatch: 'full' },
 ];
 
@@ -59,6 +61,7 @@ const appRoutes: Routes = [
     TaskTableComponent,
     TaskComponent,
     TaskItemComponent,
+    EditProjectComponent,
   ],
   imports: [
     BrowserModule,

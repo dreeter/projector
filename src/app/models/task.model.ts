@@ -1,27 +1,42 @@
-export class Task {
+import {
+  IWorkItem,
+  PRIORITY,
+  STATUS,
+} from 'src/interfaces/IWorkItem.interface';
+
+export class Task implements IWorkItem {
   constructor(
+    private _id: number,
+    private _parentId: number,
     private _title: string,
     private _description: string,
-    private _priority: string,
+    private _priority: PRIORITY,
     private _owner: string,
-    private _dueDate: string,
-    private _status: string,
-    private _project: string
+    private _dueDate: Date,
+    private _status: STATUS
   ) {}
 
-  set project(project: string) {
-    this._project = project;
+  set id(id: number) {
+    this._id = id;
   }
 
-  get project() {
-    return this._project;
+  get id(): number {
+    return this._id;
+  }
+
+  set parentId(parentId: number) {
+    this._parentId = parentId;
+  }
+
+  get parentId(): number {
+    return this._parentId;
   }
 
   set title(taskTitle: string) {
     this._title = taskTitle;
   }
 
-  get title() {
+  get title(): string {
     return this._title;
   }
 
@@ -29,15 +44,15 @@ export class Task {
     this._description = description;
   }
 
-  get description() {
+  get description(): string {
     return this._description;
   }
 
-  set priority(priority: string) {
+  set priority(priority: PRIORITY) {
     this._priority = priority;
   }
 
-  get priority() {
+  get priority(): PRIORITY {
     return this._priority;
   }
 
@@ -45,23 +60,23 @@ export class Task {
     this._owner = owner;
   }
 
-  get owner() {
+  get owner(): string {
     return this._owner;
   }
 
-  set dueDate(dueDate: string) {
+  set dueDate(dueDate: Date) {
     this._dueDate = dueDate;
   }
 
-  get dueDate() {
+  get dueDate(): Date {
     return this._dueDate;
   }
 
-  set status(dueDate: string) {
-    this._status = dueDate;
+  set status(status: STATUS) {
+    this._status = status;
   }
 
-  get status() {
+  get status(): STATUS {
     return this._status;
   }
 }

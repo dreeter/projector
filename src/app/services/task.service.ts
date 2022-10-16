@@ -1,12 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Task } from '../models/task.model';
 import { Project } from '../models/project.model';
+import { PRIORITY, STATUS } from 'src/interfaces/IWorkItem.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  private tasks: Task[] = [];
+  private tasks: Task[] = [
+    new Task(
+      1,
+      2,
+      'Task Title',
+      'Description',
+      PRIORITY.HIGH,
+      'Derek',
+      new Date(),
+      STATUS.CREATED
+    ),
+  ];
 
   constructor() {}
 
@@ -32,7 +44,28 @@ export class TaskService {
     return undefined;
   }
 
-  getChildTasks(project: Project) {
+  getChildTasks(projectID: number): Task[] | undefined {
     //given a project or a task id, retrieve all child tasks
+
+    console.log('Getting child tasks for ' + projectID);
+
+    const childTasks: Task[] | undefined = this.tasks.filter((task) => {
+      console.log(
+        'the task.project name: ' +
+          task.parentId +
+          ' the projectID ' +
+          projectID
+      );
+      return task.parentId === projectID;
+    });
+
+    console.log('The actual childTasks');
+    console.dir(childTasks);
+
+    return childTasks;
+  }
+
+  deleteTask() {
+    //delete task from database
   }
 }

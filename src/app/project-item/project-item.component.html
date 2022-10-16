@@ -1,16 +1,34 @@
 <div class="item">
   <mat-expansion-panel expanded="true">
     <mat-expansion-panel-header>
-      <mat-panel-title [routerLink]="['/project']" routerLinkActive="active">
+      <mat-panel-title
+        [routerLink]="['/project', project.title]"
+        routerLinkActive="active"
+      >
         {{ project.title }}
       </mat-panel-title>
-      <mat-action-row>
-        <button mat-button color="primary">Edit</button>
-      </mat-action-row>
       <mat-panel-description>
         Priority: {{ project.priority }} | Owner: {{ project.owner }}
       </mat-panel-description>
     </mat-expansion-panel-header>
     <p>{{ project.description }}</p>
+    <mat-action-row>
+      <button
+        [routerLink]="['/editproject']"
+        routerLinkActive="active"
+        mat-stroked-button
+        color="primary"
+      >
+        Edit
+      </button>
+      <button
+        [routerLink]="['/editproject']"
+        routerLinkActive="active"
+        mat-stroked-button
+        color="warn"
+      >
+        Delete
+      </button>
+    </mat-action-row>
   </mat-expansion-panel>
 </div>

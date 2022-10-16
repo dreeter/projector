@@ -1,30 +1,33 @@
-export enum PRIORITY {
-  HIGH,
-  MEDIUM,
-  LOW,
-}
+import {
+  IWorkItem,
+  PRIORITY,
+  STATUS,
+} from 'src/interfaces/IWorkItem.interface';
 
-export enum STATUS {
-  CREATED,
-  INPROGRESS,
-  COMPLETE,
-}
-
-export class Project {
+export class Project implements IWorkItem {
   constructor(
+    private _id: number,
     private _title: string,
     private _description: string,
-    private _priority: string,
+    private _priority: PRIORITY,
     private _owner: string,
-    private _dueDate: string,
-    private _status: string
+    private _dueDate: Date,
+    private _status: STATUS
   ) {}
+
+  set id(id: number) {
+    this._id = id;
+  }
+
+  get id(): number {
+    return this._id;
+  }
 
   set title(projectTitle: string) {
     this._title = projectTitle;
   }
 
-  get title() {
+  get title(): string {
     return this._title;
   }
 
@@ -32,15 +35,15 @@ export class Project {
     this._description = description;
   }
 
-  get description() {
+  get description(): string {
     return this._description;
   }
 
-  set priority(priority: string) {
+  set priority(priority: PRIORITY) {
     this._priority = priority;
   }
 
-  get priority() {
+  get priority(): PRIORITY {
     return this._priority;
   }
 
@@ -48,23 +51,23 @@ export class Project {
     this._owner = owner;
   }
 
-  get owner() {
+  get owner(): string {
     return this._owner;
   }
 
-  set dueDate(dueDate: string) {
+  set dueDate(dueDate: Date) {
     this._dueDate = dueDate;
   }
 
-  get dueDate() {
+  get dueDate(): Date {
     return this._dueDate;
   }
 
-  set status(dueDate: string) {
-    this._status = dueDate;
+  set status(status: STATUS) {
+    this._status = status;
   }
 
-  get status() {
+  get status(): STATUS {
     return this._status;
   }
 }

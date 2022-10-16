@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { PRIORITY, STATUS } from 'src/interfaces/IWorkItem.interface';
 import { Project } from '../models/project.model';
 import { ProjectService } from '../services/project.service';
 
@@ -20,7 +21,21 @@ export class NewProjectComponent implements OnInit {
 
   private project: Project = {} as Project;
 
-  constructor(private projectService: ProjectService) {}
+  priorities = PRIORITY;
+  statuses = STATUS;
+
+  priorityKeys: any;
+  statusKeys: any;
+
+  constructor(private projectService: ProjectService) {
+    this.priorityKeys = Object.keys(this.priorities).filter((key) =>
+      isNaN(Number(key))
+    );
+
+    this.statusKeys = Object.keys(this.statuses).filter((key) =>
+      isNaN(Number(key))
+    );
+  }
 
   ngOnInit(): void {}
 
@@ -28,11 +43,16 @@ export class NewProjectComponent implements OnInit {
     const title: string = this.projectForm.controls['title'].value;
     const description: string = this.projectForm.controls['description'].value;
     const owner: string = this.projectForm.controls['owner'].value;
-    const status: string = this.projectForm.controls['status'].value;
-    const dueDate: string = this.projectForm.controls['dueDate'].value;
-    const priority: string = this.projectForm.controls['priority'].value;
+    const status: STATUS = STATUS.CREATED;
+    const dueDate: Date = new Date();
+    const priority: PRIORITY = this.projectForm.controls['priority'].value;
+
+    console.log('The value is');
+    console.log(priority);
+    console.log(typeof priority);
 
     this.project = new Project(
+      1,
       title,
       description,
       priority,
