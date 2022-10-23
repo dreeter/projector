@@ -1,8 +1,17 @@
-import { PRIORITY, STATUS } from './taskinfo.model';
+export enum PRIORITY {
+  HIGH = 'HIGH',
+  MEDIUM = 'MEDIUM',
+  LOW = 'LOW',
+}
 
-export class Task {
+export enum STATUS {
+  CREATED = 'CREATED',
+  WORKING = 'WORKING',
+  COMPLETE = 'COMPLETE',
+}
+
+export class TaskInfo {
   constructor(
-    public id: number | null = null,
     public parent_id: number | null = null,
     public title: string,
     public description: string,
@@ -10,9 +19,6 @@ export class Task {
     public owner_id: number | null,
     public creator_id: number | null,
     public due: Date,
-    public completed: Date,
-    public status: STATUS,
-    public createdAt: Date | null,
-    public updatedAt: Date | null
+    public status: STATUS
   ) {}
 }

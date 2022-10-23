@@ -1,6 +1,8 @@
 <div>
   <mat-card>
-    <mat-card-title> New Project </mat-card-title>
+    <mat-card-title>
+      {{ isAddMode ? "New Project" : "Edit Project" }}
+    </mat-card-title>
 
     <mat-card-content>
       <form
@@ -20,7 +22,7 @@
             <mat-select formControlName="priority">
               <mat-option
                 *ngFor="let priority of priorityKeys"
-                [value]="priorities[priority]"
+                [value]="priority"
                 >{{ priority }}</mat-option
               >
             </mat-select>
@@ -39,20 +41,21 @@
           <mat-form-field appearance="fill">
             <mat-label>Status</mat-label>
             <mat-select formControlName="status">
-              <mat-option
-                *ngFor="let status of statusKeys"
-                [value]="statuses[status]"
-                >{{ status }}</mat-option
-              >
+              <mat-option *ngFor="let status of statusKeys" [value]="status">{{
+                status
+              }}</mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field appearance="fill">
             <mat-label>Due Date</mat-label>
-            <mat-select formControlName="dueDate">
-              <mat-option value="one">First option</mat-option>
-              <mat-option value="two">Second option</mat-option>
-            </mat-select>
+            <input matInput [matDatepicker]="picker" formControlName="due" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
 
@@ -65,9 +68,16 @@
 
         <div fxLayout="row" fxLayout.="column" fxLayoutAlign="end center">
           <button type="submit" mat-raised-button color="primary">
-            Create
+            {{ isAddMode ? "Create" : "Save Edit" }}
           </button>
-          <button type="submit" mat-stroked-button color="warn">Cancel</button>
+          <button
+            type="button"
+            mat-stroked-button
+            color="warn"
+            (click)="onCancel()"
+          >
+            Cancel
+          </button>
         </div>
       </form>
     </mat-card-content>

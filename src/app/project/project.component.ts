@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Project } from '../models/project.model';
 import { ProjectService } from '../services/project.service';
@@ -10,18 +10,25 @@ import { TaskService } from '../services/task.service';
   styleUrls: ['./project.component.css'],
 })
 export class ProjectComponent implements OnInit {
-  project: Project = {} as Project;
+  @Input() project: Project = {} as Project;
 
   constructor(
     private route: ActivatedRoute,
-    private projectService: ProjectService,
-    private taskService: TaskService
+    private projectService: ProjectService
   ) {}
 
   ngOnInit(): void {
+    //On initialization if a project parameter is given, we'll use that as the project
+
     this.route.params.subscribe((params: Params) => {
-      //set the project name
-      this.project.title = params['title'];
+      if (!params['id']) return;
+
+      //make a call to get this project
+      this.projectService.getProject(params['id']).subscribe((project) => {
+        this.project = project;
+      });
+
+      //make a call to get all of this projects tasks
     });
   }
 }

@@ -1,71 +1,54 @@
 import { Injectable } from '@angular/core';
 import { Task } from '../models/task.model';
-import { Project } from '../models/project.model';
-import { PRIORITY, STATUS } from 'src/interfaces/IWorkItem.interface';
+import { HttpClient } from '@angular/common/http';
+import { TaskInfo } from '../models/taskinfo.model';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskService {
-  private tasks: Task[] = [
-    new Task(
-      1,
-      2,
-      'Task Title',
-      'Description',
-      PRIORITY.HIGH,
-      'Derek',
-      new Date(),
-      STATUS.CREATED
-    ),
-  ];
+  private tasks: Task[] = [];
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  addTask(task: Task) {
-    this.tasks.push(task);
+  addTask(taskInfo: TaskInfo) {
+    this.http
+      .post('http://localhost:3000/task', taskInfo)
+      .subscribe((body) => {});
+  }
 
-    //TODO: post request to insert new task into the database
+  getTask(id: number): Observable<Task> {
+    return this.http
+      .get(`http://localhost:3000/task/${id}`, { withCredentials: true })
+      .pipe(
+        map((response) => {
+          const task: Task = response as Task;
+          return task;
+        })
+      );
   }
 
   updateTask(task: Task) {
-    //TODO: update request to update task in database
+    this.http
+      .put(`http://localhost:3000/task/${task.id}`, task)
+      .subscribe((body) => {});
   }
 
-  getTask(name: string): Task | undefined {
-    const requestedTask = this.tasks.find((task) => {
-      return task.title === name;
-    });
-
-    if (requestedTask) {
-      return requestedTask;
-    }
-
-    return undefined;
+  deleteTask(id: number): Observable<Object> {
+    return this.http.delete(`http://localhost:3000/task/${id}`);
   }
 
-  getChildTasks(projectID: number): Task[] | undefined {
-    //given a project or a task id, retrieve all child tasks
-
-    console.log('Getting child tasks for ' + projectID);
-
-    const childTasks: Task[] | undefined = this.tasks.filter((task) => {
-      console.log(
-        'the task.project name: ' +
-          task.parentId +
-          ' the projectID ' +
-          projectID
+  getChildTasks(parent_id: number): Observable<Task[]> {
+    return this.http
+      .get(`http://localhost:3000/task/children/${id}`, {
+        withCredentials: true,
+      })
+      .pipe(
+        map((taskData) => {
+          const taskArray: Task[] = taskData as Array<Task>;
+          return taskArray;
+        })
       );
-      return task.parentId === projectID;
-    });
-
-    console.log('The actual childTasks');
-    console.dir(childTasks);
-
-    return childTasks;
-  }
-
-  deleteTask() {
-    //delete task from database
   }
 }

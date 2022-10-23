@@ -1,9 +1,9 @@
-<app-project-item [project]="project"></app-project-item>
+<app-project-header [project]="project"></app-project-header>
 
 <div class="item">
   <mat-tab-group>
     <mat-tab label="Tasks">
-      <app-task-table [projectID]="project.id"></app-task-table>
+      <app-task-table [work_item_id]="project.task_id"></app-task-table>
     </mat-tab>
     <mat-tab label="Dashboard"> Content 2 </mat-tab>
     <mat-tab label="Tree"> Content 3 </mat-tab>

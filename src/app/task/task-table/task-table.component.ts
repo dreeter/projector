@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TaskService } from '../services/task.service';
-import { Task } from '../models/task.model';
+import { TaskService } from '../../services/task.service';
+import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-task-table',
@@ -10,15 +10,13 @@ import { Task } from '../models/task.model';
 export class TaskTableComponent implements OnInit {
   displayedColumns: string[] = ['title', 'status', 'owner', 'priority'];
   tasks: Task[] = [];
-  @Input() projectID: number = 1;
+  @Input() work_item_id: number | null = 1;
 
   constructor(private taskService: TaskService) {}
 
   ngOnInit(): void {
-    const childTasks: Task[] | undefined = this.taskService.getChildTasks(
-      this.projectID
-    );
-
-    if (childTasks) this.tasks = childTasks;
+    // const childTasks: Task[] | undefined = this.taskService.getChildTasks(
+    // );
+    // if (childTasks) this.tasks = childTasks;
   }
 }

@@ -1,6 +1,7 @@
 <app-action-list></app-action-list>
 
-<app-project-item
+<app-project-header
   *ngFor="let project of projects"
   [project]="project"
-></app-project-item>
+  (projectDeleted)="onProjectDelete($event)"
+></app-project-header>

@@ -1,97 +1,90 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSliderModule } from '@angular/material/slider';
 import { NavigationComponent } from './navigation/navigation.component';
 import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatCardModule } from '@angular/material/card';
 import { RouterModule, Routes } from '@angular/router';
-import { NewProjectComponent } from './new-project/new-project.component';
 import { ActionListComponent } from './action-list/action-list.component';
-import { HomeComponent } from './home/home.component';
-import { NewTaskComponent } from './new-task/new-task.component';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { ProjectItemComponent } from './project-item/project-item.component';
+import { ProjectHeaderComponent } from './project/project-header/project-header.component';
 import { ProjectComponent } from './project/project.component';
-import { TaskTableComponent } from './task-table/task-table.component';
+import { TaskTableComponent } from './task/task-table/task-table.component';
 import { TaskComponent } from './task/task.component';
-import { TaskItemComponent } from './task-item/task-item.component';
-import { MatTableModule } from '@angular/material/table';
-import { MatTabsModule } from '@angular/material/tabs';
+import { TaskItemComponent } from './task/task-item/task-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {
-  MatFormFieldModule,
-  MAT_FORM_FIELD_DEFAULT_OPTIONS,
-} from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
 import { ProjectService } from './services/project.service';
-import { EditProjectComponent } from './edit-project/edit-project.component';
+import { HttpClientModule } from '@angular/common/http';
+import { AngularMaterialModule } from './angular-material/angular-material.module';
+import { AuthModule } from './auth/auth.module';
+import { ProjectHeaderListComponent } from './project/project-header-list/project-header-list.component';
+import { AddEditProjectComponent } from './add-edit-project/add-edit-project.component';
+import { AddEditTaskComponent } from './add-edit-task/add-edit-task.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent, pathMatch: 'full' },
-  { path: 'newproject', component: NewProjectComponent, pathMatch: 'full' },
-  { path: 'editproject', component: EditProjectComponent, pathMatch: 'full' },
-  { path: 'newtask', component: NewTaskComponent, pathMatch: 'full' },
-  { path: 'project/:title', component: ProjectComponent, pathMatch: 'full' },
-  { path: 'task', component: ProjectComponent, pathMatch: 'full' },
+  {
+    path: 'home',
+    component: NavigationComponent,
+    children: [
+      {
+        path: 'projects',
+        component: ProjectHeaderListComponent,
+      },
+      {
+        path: 'projects/:id',
+        component: ProjectComponent,
+      },
+      {
+        path: 'editproject',
+        component: AddEditProjectComponent,
+        // pathMatch: 'full',
+      },
+      {
+        path: 'editproject/:id',
+        component: AddEditProjectComponent,
+        // pathMatch: 'full',
+      },
+    ],
+  },
+
+  // { path: 'newtask', component: NewTaskComponent, pathMatch: 'full' },
+  // { path: 'project/:id', component: ProjectComponent, pathMatch: 'full' },
+  // { path: 'task', component: ProjectComponent, pathMatch: 'full' },
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationComponent,
-    NewProjectComponent,
     ActionListComponent,
-    HomeComponent,
-    NewTaskComponent,
-    ProjectItemComponent,
+    ProjectHeaderComponent,
     ProjectComponent,
     TaskTableComponent,
     TaskComponent,
     TaskItemComponent,
-    EditProjectComponent,
+    ProjectHeaderListComponent,
+    AddEditProjectComponent,
+    AddEditTaskComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatSliderModule,
     LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
-    MatCardModule,
-    MatExpansionModule,
-    MatTableModule,
-    MatTabsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatGridListModule,
     FormsModule,
-    MatInputModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    HttpClientModule,
+    AuthModule,
+    AngularMaterialModule,
     RouterModule.forRoot(appRoutes),
   ],
   providers: [
-    {
-      provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
-      useValue: { appearance: 'fill' },
-    },
+    // {
+    //   provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+    //   useValue: { appearance: 'fill' },
+    // },
     ProjectService,
   ],
   bootstrap: [AppComponent],

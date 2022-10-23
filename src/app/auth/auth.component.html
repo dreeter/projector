@@ -1,0 +1,45 @@
+<div>
+  <mat-card>
+    <mat-card-title> {{ isLoginMode ? "Login" : "Sign Up" }} </mat-card-title>
+
+    <mat-card-content>
+      <form
+        fxLayout="column"
+        fxLayout.lt-md="column"
+        [formGroup]="authForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div fxLayout="column" fxLayout.lt-lg="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput required formControlName="email" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input matInput required formControlName="password" />
+          </mat-form-field>
+
+          <mat-form-field *ngIf="!isLoginMode" appearance="fill">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput required formControlName="password-confirm" />
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row">
+          <button type="submit" mat-raised-button color="primary">
+            {{ isLoginMode ? "Login" : "Sign Up" }}
+          </button>
+          <button
+            type="button"
+            mat-button
+            color="primary"
+            (click)="onSwitchMode()"
+          >
+            {{ isLoginMode ? "Register" : "Login" }}
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

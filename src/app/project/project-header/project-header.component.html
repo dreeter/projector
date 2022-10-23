@@ -2,31 +2,28 @@
   <mat-expansion-panel expanded="true">
     <mat-expansion-panel-header>
       <mat-panel-title
-        [routerLink]="['/project', project.title]"
+        [routerLink]="['../projects', project.id]"
         routerLinkActive="active"
       >
-        {{ project.title }}
+        {{ project.task.title }}
       </mat-panel-title>
       <mat-panel-description>
-        Priority: {{ project.priority }} | Owner: {{ project.owner }}
+        Priority: {{ project.task.priority }} | Owner:
+        {{ project.task.owner_id }}
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <p>{{ project.description }}</p>
+    <p>{{ project.task.description }}</p>
+    <!-- <app-add-edit-project></app-add-edit-project> -->
     <mat-action-row>
       <button
-        [routerLink]="['/editproject']"
+        [routerLink]="['../editproject', project.id]"
         routerLinkActive="active"
         mat-stroked-button
         color="primary"
       >
         Edit
       </button>
-      <button
-        [routerLink]="['/editproject']"
-        routerLinkActive="active"
-        mat-stroked-button
-        color="warn"
-      >
+      <button mat-stroked-button color="warn" (click)="onDelete()">
         Delete
       </button>
     </mat-action-row>
