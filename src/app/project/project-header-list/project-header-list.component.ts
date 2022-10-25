@@ -13,6 +13,7 @@ export class ProjectHeaderListComponent implements OnInit {
   constructor(private projectService: ProjectService) {}
 
   ngOnInit(): void {
+    console.log('ngOnInit being called');
     this.projectService.getProjects().subscribe((projects) => {
       this.projects = projects as Project[];
     });
@@ -25,8 +26,4 @@ export class ProjectHeaderListComponent implements OnInit {
       });
     }
   }
-
-  // ngOnChanges() {
-  //   this.projects = this.projectService.getProjects();
-  // }
 }

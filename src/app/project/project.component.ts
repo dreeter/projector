@@ -26,6 +26,8 @@ export class ProjectComponent implements OnInit {
       //make a call to get this project
       this.projectService.getProject(params['id']).subscribe((project) => {
         this.project = project;
+        console.log('Got project');
+        console.dir(this.project);
       });
 
       //make a call to get all of this projects tasks

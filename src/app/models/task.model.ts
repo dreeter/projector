@@ -12,7 +12,7 @@ export class Task {
     public due: Date,
     public completed: Date,
     public status: STATUS,
-    public createdAt: Date | null,
-    public updatedAt: Date | null
+    public createdAt: Date,
+    public updatedAt: Date
   ) {}
 }

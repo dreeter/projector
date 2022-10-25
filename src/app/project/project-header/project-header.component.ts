@@ -9,18 +9,20 @@ import { Project } from '../../models/project.model';
 })
 export class ProjectHeaderComponent implements OnInit {
   @Input() project: Project = {} as Project;
-
   @Output() projectDeleted: EventEmitter<number | null> = new EventEmitter<
     number | null
   >();
 
+  addTaskMode: boolean = false;
+
   constructor(private projectService: ProjectService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('Header Initializing');
+    console.dir(this.project);
+  }
 
   onDelete() {
-    //ask project service to delete this project in the database
-
     if (this.project.id) {
       this.projectService
         .deleteProject(this.project.id)
@@ -28,5 +30,9 @@ export class ProjectHeaderComponent implements OnInit {
           this.projectDeleted.emit(this.project.id);
         });
     }
+  }
+
+  toggleAddMode() {
+    this.addTaskMode = !this.addTaskMode;
   }
 }

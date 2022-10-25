@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Task } from '../models/task.model';
@@ -14,6 +14,9 @@ import { TaskService } from '../services/task.service';
 export class AddEditTaskComponent {
   isAddMode: boolean = true;
   task: Task = {} as Task;
+
+  @Input() parent_id: number | null = null;
+  @Output() submitted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   taskForm: FormGroup = new FormGroup({
     title: new FormControl(''),
@@ -43,26 +46,24 @@ export class AddEditTaskComponent {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      if (!params['id']) return;
-      this.isAddMode = false;
-
-      this.taskService.getTask(params['id']).subscribe((task) => {
-        this.task = task;
-
-        this.taskForm.controls['title'].setValue(this.task.title);
-        this.taskForm.controls['description'].setValue(this.task.description);
-        this.taskForm.controls['owner'].setValue(this.task.owner_id);
-        this.taskForm.controls['status'].setValue(this.task.status);
-        this.taskForm.controls['due'].setValue(this.task.due);
-        this.taskForm.controls['priority'].setValue(this.task.priority);
-      });
-    });
+    // this.route.params.subscribe((params: Params) => {
+    //   if (!params['id']) return;
+    //   this.isAddMode = false;
+    //   this.taskService.getTask(params['id']).subscribe((task) => {
+    //     this.task = task;
+    //     this.taskForm.controls['title'].setValue(this.task.title);
+    //     this.taskForm.controls['description'].setValue(this.task.description);
+    //     this.taskForm.controls['owner'].setValue(this.task.owner_id);
+    //     this.taskForm.controls['status'].setValue(this.task.status);
+    //     this.taskForm.controls['due'].setValue(this.task.due);
+    //     this.taskForm.controls['priority'].setValue(this.task.priority);
+    //   });
+    // });
   }
   onSubmit() {
     if (this.isAddMode) {
       const taskInfo: TaskInfo = new TaskInfo(
-        null,
+        this.parent_id,
         this.taskForm.controls['title'].value,
         this.taskForm.controls['description'].value,
         this.taskForm.controls['priority'].value,
@@ -71,17 +72,23 @@ export class AddEditTaskComponent {
         this.taskForm.controls['due'].value,
         this.taskForm.controls['status'].value
       );
-      this.taskService.addTask(taskInfo);
+
+      this.taskService.addTask(taskInfo).subscribe((body) => {
+        this.submitted.emit(true);
+        if (this.parent_id) {
+          this.taskService.getChildTasks(this.parent_id);
+        }
+      });
     } else {
       (this.task.title = this.taskForm.controls['title'].value),
         (this.task.description = this.taskForm.controls['description'].value),
         (this.task.priority = this.taskForm.controls['priority'].value),
         (this.task.due = this.taskForm.controls['due'].value),
         (this.task.status = this.taskForm.controls['status'].value),
-        this.taskService.updateTask(this.task);
+        this.taskService.updateTask(this.task).subscribe((body) => {
+          //emit an event that the task has been updated, so the parent component can leave add mode
+          //table should also be queried for all tasks again
+        });
     }
-  }
-  onCancel() {
-    this.navigationService.back();
   }
 }

@@ -12,10 +12,8 @@ export class TaskService {
 
   constructor(private http: HttpClient) {}
 
-  addTask(taskInfo: TaskInfo) {
-    this.http
-      .post('http://localhost:3000/task', taskInfo)
-      .subscribe((body) => {});
+  addTask(taskInfo: TaskInfo): Observable<Object> {
+    return this.http.post('http://localhost:3000/task', taskInfo);
   }
 
   getTask(id: number): Observable<Task> {
@@ -29,10 +27,8 @@ export class TaskService {
       );
   }
 
-  updateTask(task: Task) {
-    this.http
-      .put(`http://localhost:3000/task/${task.id}`, task)
-      .subscribe((body) => {});
+  updateTask(task: Task): Observable<Object> {
+    return this.http.put(`http://localhost:3000/task/${task.id}`, task);
   }
 
   deleteTask(id: number): Observable<Object> {
@@ -41,7 +37,7 @@ export class TaskService {
 
   getChildTasks(parent_id: number): Observable<Task[]> {
     return this.http
-      .get(`http://localhost:3000/task/children/${id}`, {
+      .get(`http://localhost:3000/task/children/${parent_id}`, {
         withCredentials: true,
       })
       .pipe(

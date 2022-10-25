@@ -2,25 +2,24 @@
   <mat-expansion-panel expanded="true">
     <mat-expansion-panel-header>
       <mat-panel-title
-        [routerLink]="['../projects', project.id]"
+        [routerLink]="['../projects', task.id]"
         routerLinkActive="active"
       >
-        {{ project.task.title }}
+        {{ task.title }}
       </mat-panel-title>
       <mat-panel-description>
-        Priority: {{ project.task.priority }} | Owner:
-        {{ project.task.owner_id }}
+        Priority: {{ task.priority }} | Owner:
+        {{ task.owner_id }}
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <p>{{ project.task.description }}</p>
+    <p>{{ task.description }}</p>
     <app-add-edit-task
-      (submitted)="toggleAddMode()"
       *ngIf="addTaskMode"
-      [parent_id]="project.task.id"
+      [parent_id]="task.id"
     ></app-add-edit-task>
     <mat-action-row fxLayout="row">
       <button
-        [routerLink]="['../editproject', project.id]"
+        [routerLink]="['../editproject', task.id]"
         routerLinkActive="active"
         mat-stroked-button
         color="primary"

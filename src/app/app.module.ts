@@ -11,7 +11,7 @@ import { ProjectHeaderComponent } from './project/project-header/project-header.
 import { ProjectComponent } from './project/project.component';
 import { TaskTableComponent } from './task/task-table/task-table.component';
 import { TaskComponent } from './task/task.component';
-import { TaskItemComponent } from './task/task-item/task-item.component';
+import { TaskHeaderComponent } from './task/task-header/task-header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProjectService } from './services/project.service';
@@ -34,6 +34,10 @@ const appRoutes: Routes = [
       {
         path: 'projects/:id',
         component: ProjectComponent,
+      },
+      {
+        path: 'task/:id',
+        component: TaskComponent,
       },
       {
         path: 'editproject',
@@ -62,7 +66,7 @@ const appRoutes: Routes = [
     ProjectComponent,
     TaskTableComponent,
     TaskComponent,
-    TaskItemComponent,
+    TaskHeaderComponent,
     ProjectHeaderListComponent,
     AddEditProjectComponent,
     AddEditTaskComponent,

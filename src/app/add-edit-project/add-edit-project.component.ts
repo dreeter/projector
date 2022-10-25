@@ -84,7 +84,9 @@ export class AddEditProjectComponent implements OnInit {
         this.projectForm.controls['status'].value
       );
 
-      this.projectService.addProject(taskInfo);
+      this.projectService.addProject(taskInfo).subscribe((body) => {
+        this.navigationService.back();
+      });
     } else {
       (this.project.task.title = this.projectForm.controls['title'].value),
         (this.project.task.description =
@@ -93,7 +95,9 @@ export class AddEditProjectComponent implements OnInit {
           this.projectForm.controls['priority'].value),
         (this.project.task.due = this.projectForm.controls['due'].value),
         (this.project.task.status = this.projectForm.controls['status'].value),
-        this.projectService.updateProject(this.project);
+        this.projectService.updateProject(this.project).subscribe((body) => {
+          this.navigationService.back();
+        });
     }
   }
 

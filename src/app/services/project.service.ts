@@ -12,10 +12,8 @@ export class ProjectService {
     console.log('Project Service being destroyed');
   }
 
-  addProject(taskInfo: TaskInfo) {
-    this.http
-      .post('http://localhost:3000/project', taskInfo)
-      .subscribe((body) => {});
+  addProject(taskInfo: TaskInfo): Observable<Object> {
+    return this.http.post('http://localhost:3000/project', taskInfo);
   }
 
   getProject(id: number): Observable<Project> {
@@ -30,9 +28,10 @@ export class ProjectService {
   }
 
   updateProject(project: Project) {
-    this.http
-      .put(`http://localhost:3000/project/${project.id}`, project)
-      .subscribe((body) => {});
+    return this.http.put(
+      `http://localhost:3000/project/${project.id}`,
+      project
+    );
   }
 
   deleteProject(id: number): Observable<Object> {
