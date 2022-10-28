@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Task } from '../models/task.model';
 import { PRIORITY, STATUS, TaskInfo } from '../models/taskinfo.model';
 import { NavigationService } from '../services/navigation.service';
@@ -12,11 +13,15 @@ import { TaskService } from '../services/task.service';
   styleUrls: ['./add-edit-task.component.css'],
 })
 export class AddEditTaskComponent {
+  taskAddErrorSub: Subscription = {} as Subscription;
+  taskAddedSub: Subscription = {} as Subscription;
+  taskUpdateErrorSub: Subscription = {} as Subscription;
+  // taskUpdatedSub: Subscription = {} as Subscription;
+
   isAddMode: boolean = true;
   task: Task = {} as Task;
 
   @Input() parent_id: number | null = null;
-  @Output() submitted: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   taskForm: FormGroup = new FormGroup({
     title: new FormControl(''),
@@ -46,49 +51,58 @@ export class AddEditTaskComponent {
   }
 
   ngOnInit(): void {
-    // this.route.params.subscribe((params: Params) => {
-    //   if (!params['id']) return;
-    //   this.isAddMode = false;
-    //   this.taskService.getTask(params['id']).subscribe((task) => {
-    //     this.task = task;
-    //     this.taskForm.controls['title'].setValue(this.task.title);
-    //     this.taskForm.controls['description'].setValue(this.task.description);
-    //     this.taskForm.controls['owner'].setValue(this.task.owner_id);
-    //     this.taskForm.controls['status'].setValue(this.task.status);
-    //     this.taskForm.controls['due'].setValue(this.task.due);
-    //     this.taskForm.controls['priority'].setValue(this.task.priority);
-    //   });
-    // });
+    this.taskAddedSub = this.taskService.taskAdded.subscribe(
+      (added: boolean) => {}
+    );
+
+    this.taskAddErrorSub = this.taskService.taskAddError.subscribe(
+      (error: Error) => {
+        //TODO: give user an error message
+      }
+    );
+
+    // this.taskUpdatedSub = this.taskService.taskUpdated.subscribe(
+    //   (updated: boolean) => {
+    //     this.navigationService.back();
+    //   }
+    // );
+
+    this.taskUpdateErrorSub = this.taskService.taskUpdateError.subscribe(
+      (error: Error) => {
+        //TODO: give user an error message
+      }
+    );
   }
+
   onSubmit() {
     if (this.isAddMode) {
-      const taskInfo: TaskInfo = new TaskInfo(
-        this.parent_id,
-        this.taskForm.controls['title'].value,
-        this.taskForm.controls['description'].value,
-        this.taskForm.controls['priority'].value,
-        null,
-        null,
-        this.taskForm.controls['due'].value,
-        this.taskForm.controls['status'].value
+      this.taskService.addTask(
+        new TaskInfo(
+          this.parent_id,
+          this.taskForm.get('title')!.value,
+          this.taskForm.get('description')!.value,
+          this.taskForm.get('priority')!.value,
+          null,
+          null,
+          this.taskForm.get('due')!.value,
+          this.taskForm.get('status')!.value
+        )
       );
-
-      this.taskService.addTask(taskInfo).subscribe((body) => {
-        this.submitted.emit(true);
-        if (this.parent_id) {
-          this.taskService.getChildTasks(this.parent_id);
-        }
-      });
     } else {
-      (this.task.title = this.taskForm.controls['title'].value),
-        (this.task.description = this.taskForm.controls['description'].value),
-        (this.task.priority = this.taskForm.controls['priority'].value),
-        (this.task.due = this.taskForm.controls['due'].value),
-        (this.task.status = this.taskForm.controls['status'].value),
-        this.taskService.updateTask(this.task).subscribe((body) => {
-          //emit an event that the task has been updated, so the parent component can leave add mode
-          //table should also be queried for all tasks again
-        });
+      this.task.title = this.taskForm.get('title')!.value;
+      this.task.description = this.taskForm.get('description')!.value;
+      this.task.priority = this.taskForm.get('priority')!.value;
+      this.task.due = this.taskForm.get('due')!.value;
+      this.task.status = this.taskForm.get('status')!.value;
+
+      this.taskService.updateTask(this.task);
     }
+  }
+
+  ngOnDestroy() {
+    this.taskAddedSub.unsubscribe();
+    this.taskAddErrorSub.unsubscribe();
+    // this.taskUpdatedSub.unsubscribe();
+    this.taskUpdateErrorSub.unsubscribe();
   }
 }

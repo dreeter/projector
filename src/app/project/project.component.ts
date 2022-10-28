@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Project } from '../models/project.model';
+import { NavigationService } from '../services/navigation.service';
 import { ProjectService } from '../services/project.service';
 import { TaskService } from '../services/task.service';
 
@@ -14,23 +15,25 @@ export class ProjectComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+    private router: Router,
+    private navigationService: NavigationService
   ) {}
 
   ngOnInit(): void {
-    //On initialization if a project parameter is given, we'll use that as the project
-
     this.route.params.subscribe((params: Params) => {
       if (!params['id']) return;
 
       //make a call to get this project
       this.projectService.getProject(params['id']).subscribe((project) => {
         this.project = project;
-        console.log('Got project');
-        console.dir(this.project);
-      });
 
-      //make a call to get all of this projects tasks
+        //inform navigation about this
+        this.navigationService.addRouteToTree({
+          url: this.router.url,
+          name: this.project.task.title,
+        });
+      });
     });
   }
 }

@@ -12,7 +12,7 @@
         <div fxLayout="column" fxLayout.lt-lg="column">
           <mat-form-field appearance="fill">
             <mat-label>Email</mat-label>
-            <input matInput required formControlName="email" />
+            <input matInput required email formControlName="email" />
           </mat-form-field>
 
           <mat-form-field appearance="fill">
@@ -22,7 +22,7 @@
 
           <mat-form-field *ngIf="!isLoginMode" appearance="fill">
             <mat-label>Confirm Password</mat-label>
-            <input matInput required formControlName="password-confirm" />
+            <input matInput required formControlName="passwordConfirmation" />
           </mat-form-field>
         </div>
 

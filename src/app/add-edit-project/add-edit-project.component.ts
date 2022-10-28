@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Project } from '../models/project.model';
 import { PRIORITY, STATUS, TaskInfo } from '../models/taskinfo.model';
 import { NavigationService } from '../services/navigation.service';
@@ -12,6 +13,11 @@ import { ProjectService } from '../services/project.service';
   styleUrls: ['./add-edit-project.component.css'],
 })
 export class AddEditProjectComponent implements OnInit {
+  projectAddErrorSub: Subscription = {} as Subscription;
+  projectAddedSub: Subscription = {} as Subscription;
+  projectUpdateErrorSub: Subscription = {} as Subscription;
+  projectUpdatedSub: Subscription = {} as Subscription;
+
   isAddMode: boolean = true;
 
   project: Project = {} as Project;
@@ -69,39 +75,67 @@ export class AddEditProjectComponent implements OnInit {
         );
       });
     });
+
+    this.projectAddedSub = this.projectService.projectAdded.subscribe(
+      (added: boolean) => {
+        this.navigationService.back();
+      }
+    );
+
+    this.projectAddErrorSub = this.projectService.projectAddError.subscribe(
+      (error: Error) => {
+        //TODO: give user an error message
+      }
+    );
+
+    this.projectUpdatedSub = this.projectService.projectUpdated.subscribe(
+      (updated: boolean) => {
+        this.navigationService.back();
+      }
+    );
+
+    this.projectUpdateErrorSub =
+      this.projectService.projectUpdateError.subscribe((error: Error) => {
+        //TODO: give user an error message
+      });
+
+    this.project;
   }
 
   onSubmit() {
     if (this.isAddMode) {
       const taskInfo: TaskInfo = new TaskInfo(
         null,
-        this.projectForm.controls['title'].value,
-        this.projectForm.controls['description'].value,
-        this.projectForm.controls['priority'].value,
+        this.projectForm.get('title')!.value,
+        this.projectForm.get('description')!.value,
+        this.projectForm.get('priority')!.value,
         null,
         null,
-        this.projectForm.controls['due'].value,
-        this.projectForm.controls['status'].value
+        this.projectForm.get('due')!.value,
+        this.projectForm.get('status')!.value
       );
 
-      this.projectService.addProject(taskInfo).subscribe((body) => {
-        this.navigationService.back();
-      });
+      this.projectService.addProject(taskInfo);
     } else {
-      (this.project.task.title = this.projectForm.controls['title'].value),
-        (this.project.task.description =
-          this.projectForm.controls['description'].value),
-        (this.project.task.priority =
-          this.projectForm.controls['priority'].value),
-        (this.project.task.due = this.projectForm.controls['due'].value),
-        (this.project.task.status = this.projectForm.controls['status'].value),
-        this.projectService.updateProject(this.project).subscribe((body) => {
-          this.navigationService.back();
-        });
+      this.project.task.title = this.projectForm.get('title')!.value;
+      this.project.task.description =
+        this.projectForm.get('description')!.value;
+      this.project.task.priority = this.projectForm.get('priority')!.value;
+      this.project.task.due = this.projectForm.get('due')!.value;
+      this.project.task.status = this.projectForm.get('status')!.value;
+
+      this.projectService.updateProject(this.project);
     }
   }
 
   onCancel() {
     this.navigationService.back();
+  }
+
+  ngOnDestroy() {
+    this.projectAddedSub.unsubscribe();
+    this.projectAddErrorSub.unsubscribe();
+    this.projectUpdatedSub.unsubscribe();
+    this.projectUpdateErrorSub.unsubscribe();
   }
 }

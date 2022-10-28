@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TaskService } from '../services/task.service';
 import { Task } from '../models/task.model';
+import { Subject } from 'rxjs';
+import { NavigationService } from '../services/navigation.service';
 
 @Component({
   selector: 'app-task',
@@ -13,7 +15,9 @@ export class TaskComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private router: Router,
+    private navigationService: NavigationService
   ) {}
 
   ngOnInit(): void {
@@ -22,9 +26,12 @@ export class TaskComponent implements OnInit {
 
       //make a call to get this task
       this.taskService.getTask(params['id']).subscribe((task) => {
-        console.log('Logging the task');
-        console.log(task);
         this.task = task;
+
+        this.navigationService.addRouteToTree({
+          url: this.router.url,
+          name: this.task.title,
+        });
       });
     });
   }

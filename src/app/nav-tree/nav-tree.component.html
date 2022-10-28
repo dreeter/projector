@@ -1,0 +1,10 @@
+<mat-nav-list fxLayout="row" fxLayoutAlign="start center">
+  <a
+    fxFlex
+    mat-list-item
+    *ngFor="let navBranch of navTree"
+    (click)="onNavigate(navBranch.url)"
+  >
+    <mat-icon>double_arrow</mat-icon>&nbsp;&nbsp;{{ navBranch.name }}</a
+  >
+</mat-nav-list>

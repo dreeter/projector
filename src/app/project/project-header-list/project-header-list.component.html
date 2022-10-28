@@ -1,7 +1,9 @@
 <app-action-list></app-action-list>
 
+<h1>Projects</h1>
+<hr />
+
 <app-project-header
   *ngFor="let project of projects"
   [project]="project"
-  (projectDeleted)="onProjectDelete($event)"
 ></app-project-header>
