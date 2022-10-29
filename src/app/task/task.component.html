@@ -8,6 +8,8 @@
       <app-task-table [parent_id]="task.id"></app-task-table>
     </mat-tab>
     <mat-tab label="Dashboard"> Content 2 </mat-tab>
-    <mat-tab label="Tree"> Content 3 </mat-tab>
+    <mat-tab label="Tree">
+      <app-task-tree [task]="task"></app-task-tree>
+    </mat-tab>
   </mat-tab-group>
 </div>

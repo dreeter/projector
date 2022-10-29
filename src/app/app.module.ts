@@ -24,6 +24,8 @@ import { AddEditProjectComponent } from './add-edit-project/add-edit-project.com
 import { AddTaskComponent } from './add-task/add-task.component';
 import { NavTreeComponent } from './nav-tree/nav-tree.component';
 import { EditTaskComponent } from './edit-task/edit-task.component';
+import { TaskTreeComponent } from './task/task-tree/task-tree.component';
+import { MatTreeModule } from '@angular/material/tree';
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { EditTaskComponent } from './edit-task/edit-task.component';
     AddTaskComponent,
     NavTreeComponent,
     EditTaskComponent,
+    TaskTreeComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,6 +55,7 @@ import { EditTaskComponent } from './edit-task/edit-task.component';
     HttpClientModule,
     AuthModule,
     AngularMaterialModule,
+    MatTreeModule,
   ],
   providers: [ProjectService, TaskService, NavigationService],
   bootstrap: [AppComponent],

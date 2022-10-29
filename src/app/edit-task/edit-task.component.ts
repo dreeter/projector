@@ -81,9 +81,6 @@ export class EditTaskComponent implements OnInit, OnDestroy {
     this.task.due = this.taskForm.get('due')!.value;
     this.task.status = this.taskForm.get('status')!.value;
 
-    console.log('Updating task with this as task: ');
-    console.log(this.task);
-
     this.taskService.updateTask(this.task);
   }
 

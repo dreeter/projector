@@ -2,7 +2,7 @@ import { PRIORITY, STATUS } from './taskinfo.model';
 
 export class Task {
   constructor(
-    public id: number | null = null,
+    public id: number,
     public parent_id: number | null = null,
     public title: string,
     public description: string,
