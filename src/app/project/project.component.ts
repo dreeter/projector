@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Project } from '../models/project.model';
 import { NavigationService } from '../services/navigation.service';
 import { ProjectService } from '../services/project.service';
@@ -10,8 +11,10 @@ import { TaskService } from '../services/task.service';
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.css'],
 })
-export class ProjectComponent implements OnInit {
+export class ProjectComponent implements OnInit, OnDestroy {
   @Input() project: Project = {} as Project;
+
+  projectDeletedSub: Subscription = new Subscription();
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +31,9 @@ export class ProjectComponent implements OnInit {
       this.projectService.getProject(params['id']).subscribe((project) => {
         this.project = project;
 
+        //reset the navigation tree
+        this.navigationService.resetNavTree();
+
         //inform navigation about this
         this.navigationService.addRouteToTree({
           url: this.router.url,
@@ -35,5 +41,15 @@ export class ProjectComponent implements OnInit {
         });
       });
     });
+
+    this.projectDeletedSub = this.projectService.projectDeleted.subscribe(
+      () => {
+        this.router.navigateByUrl('/home/projects');
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.projectDeletedSub.unsubscribe();
   }
 }

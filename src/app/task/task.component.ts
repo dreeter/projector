@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { TaskService } from '../services/task.service';
 import { Task } from '../models/task.model';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { NavigationService } from '../services/navigation.service';
 
 @Component({
@@ -12,6 +12,8 @@ import { NavigationService } from '../services/navigation.service';
 })
 export class TaskComponent implements OnInit {
   task: Task = {} as Task;
+
+  taskDeletedSub: Subscription = new Subscription();
 
   constructor(
     private route: ActivatedRoute,
@@ -34,5 +36,13 @@ export class TaskComponent implements OnInit {
         });
       });
     });
+
+    this.taskDeletedSub = this.taskService.taskDeleted.subscribe(() => {
+      this.navigationService.navUpTree();
+    });
+  }
+
+  ngOnDestroy() {
+    this.taskDeletedSub.unsubscribe();
   }
 }

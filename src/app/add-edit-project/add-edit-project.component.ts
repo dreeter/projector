@@ -19,7 +19,6 @@ export class AddEditProjectComponent implements OnInit {
   projectUpdatedSub: Subscription = {} as Subscription;
 
   isAddMode: boolean = true;
-
   project: Project = {} as Project;
 
   projectForm: FormGroup = new FormGroup({
@@ -33,7 +32,6 @@ export class AddEditProjectComponent implements OnInit {
 
   priorities = PRIORITY;
   statuses = STATUS;
-
   priorityKeys: any;
   statusKeys: any;
 
@@ -53,8 +51,6 @@ export class AddEditProjectComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      console.log(params['id']);
-
       //No project to retrieve, just return
       if (!params['id']) return;
 
@@ -98,8 +94,6 @@ export class AddEditProjectComponent implements OnInit {
       this.projectService.projectUpdateError.subscribe((error: Error) => {
         //TODO: give user an error message
       });
-
-    this.project;
   }
 
   onSubmit() {

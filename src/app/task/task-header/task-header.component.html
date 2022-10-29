@@ -13,13 +13,10 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <p>{{ task.description }}</p>
-    <app-add-edit-task
-      *ngIf="addTaskMode"
-      [parent_id]="task.id"
-    ></app-add-edit-task>
+    <app-add-task *ngIf="addTaskMode" [parent_id]="task.id"></app-add-task>
     <mat-action-row fxLayout="row">
       <button
-        [routerLink]="['../editproject', task.id]"
+        [routerLink]="['/home/edittask', task.id]"
         routerLinkActive="active"
         mat-stroked-button
         color="primary"
@@ -27,7 +24,7 @@
         Edit
       </button>
       <button mat-stroked-button color="accent" (click)="toggleAddMode()">
-        {{ addTaskMode ? "Discard Task" : "Add Task" }}
+        {{ addTaskMode ? "Discard Sub-Task" : "Add Sub-Task" }}
       </button>
       <button mat-stroked-button color="warn" (click)="onDelete()">
         Delete

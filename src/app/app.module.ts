@@ -21,8 +21,9 @@ import { AngularMaterialModule } from './angular-material/angular-material.modul
 import { AuthModule } from './auth/auth.module';
 import { ProjectHeaderListComponent } from './project/project-header-list/project-header-list.component';
 import { AddEditProjectComponent } from './add-edit-project/add-edit-project.component';
-import { AddEditTaskComponent } from './add-edit-task/add-edit-task.component';
+import { AddTaskComponent } from './add-task/add-task.component';
 import { NavTreeComponent } from './nav-tree/nav-tree.component';
+import { EditTaskComponent } from './edit-task/edit-task.component';
 
 @NgModule({
   declarations: [
@@ -36,8 +37,9 @@ import { NavTreeComponent } from './nav-tree/nav-tree.component';
     TaskHeaderComponent,
     ProjectHeaderListComponent,
     AddEditProjectComponent,
-    AddEditTaskComponent,
+    AddTaskComponent,
     NavTreeComponent,
+    EditTaskComponent,
   ],
   imports: [
     BrowserModule,

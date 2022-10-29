@@ -13,11 +13,11 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <p>{{ project.task.description }}</p>
-    <app-add-edit-task
+    <app-add-task
       (submitted)="toggleAddMode()"
       *ngIf="addTaskMode"
       [parent_id]="project.task.id"
-    ></app-add-edit-task>
+    ></app-add-task>
     <mat-action-row fxLayout="row">
       <button
         [routerLink]="['/home/editproject', project.id]"

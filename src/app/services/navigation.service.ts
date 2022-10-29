@@ -27,6 +27,14 @@ export class NavigationService {
       });
   }
 
+  resetNavTree() {
+    this.navTree = [];
+  }
+
+  navUpTree() {
+    this.router.navigateByUrl(this.navTree[this.navTree.length - 2].url);
+  }
+
   addRouteToTree(navBranch: NavBranch) {
     const index: number = this.navTree.findIndex((route) => {
       return route.url === navBranch.url;

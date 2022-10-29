@@ -1,0 +1,92 @@
+<div>
+  <mat-card>
+    <mat-card-title> Edit Task </mat-card-title>
+
+    <mat-card-content>
+      <form
+        fxLayout="column"
+        fxLayout.lt-md="column"
+        [formGroup]="taskForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div fxLayout="row" fxLayout.lt-lg="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Task Title</mat-label>
+            <input matInput required formControlName="title" />
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Priority</mat-label>
+            <mat-select formControlName="priority" required>
+              <mat-option
+                *ngFor="let priority of priorityKeys"
+                [value]="priority"
+                >{{ priority }}</mat-option
+              >
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Owner</mat-label>
+            <mat-select formControlName="owner" required>
+              <mat-option value="one">First option</mat-option>
+              <mat-option value="two">Second option</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayout.lt-lg="column">
+          <mat-form-field appearance="fill">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status" required>
+              <mat-option *ngFor="let status of statusKeys" [value]="status">{{
+                status
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill">
+            <mat-label>Due Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="due"
+              required
+            />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div id="project-description" fxLayout="row" fxLayout.="column">
+          <mat-form-field id="formfield" fxFlexFill appearance="fill">
+            <mat-label>Task Description</mat-label>
+            <textarea
+              matInput
+              formControlName="description"
+              required
+            ></textarea>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayout.="column" fxLayoutAlign="end center">
+          <button type="submit" mat-raised-button color="primary">
+            Save Edit
+          </button>
+          <button
+            type="button"
+            mat-stroked-button
+            color="warn"
+            (click)="onCancel()"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

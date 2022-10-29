@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProjectService } from 'src/app/services/project.service';
+import { TaskService } from 'src/app/services/task.service';
 import { Project } from '../../models/project.model';
 
 //Component responsible for listing the information about a project
@@ -20,9 +21,14 @@ export class ProjectHeaderComponent implements OnInit, OnDestroy {
   @Input() project: Project = {} as Project;
 
   deleteErrorSub: Subscription = {} as Subscription;
+  taskAddedSub: Subscription = {} as Subscription;
+
   addTaskMode: boolean = false;
 
-  constructor(private projectService: ProjectService) {}
+  constructor(
+    private projectService: ProjectService,
+    private taskService: TaskService
+  ) {}
 
   ngOnInit(): void {
     this.deleteErrorSub = this.projectService.projectDeleteError.subscribe(
@@ -30,6 +36,10 @@ export class ProjectHeaderComponent implements OnInit, OnDestroy {
         //TODO: show user an error response, could not delete
       }
     );
+
+    this.taskAddedSub = this.taskService.taskAdded.subscribe(() => {
+      this.toggleAddMode();
+    });
   }
 
   onDelete() {
@@ -44,5 +54,6 @@ export class ProjectHeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.deleteErrorSub.unsubscribe();
+    this.taskAddedSub.unsubscribe();
   }
 }

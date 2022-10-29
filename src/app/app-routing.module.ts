@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddEditProjectComponent } from './add-edit-project/add-edit-project.component';
-import { AddEditTaskComponent } from './add-edit-task/add-edit-task.component';
+import { AddTaskComponent } from './add-task/add-task.component';
+import { EditTaskComponent } from './edit-task/edit-task.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { ProjectHeaderListComponent } from './project/project-header-list/project-header-list.component';
 import { ProjectComponent } from './project/project.component';
@@ -40,12 +41,8 @@ const routes: Routes = [
         component: AddEditProjectComponent,
       },
       {
-        path: 'edittask',
-        component: AddEditTaskComponent,
-      },
-      {
         path: 'edittask/:id',
-        component: AddEditTaskComponent,
+        component: EditTaskComponent,
       },
     ],
   },
