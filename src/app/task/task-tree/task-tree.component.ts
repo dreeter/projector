@@ -32,6 +32,8 @@ export class TaskTreeComponent implements OnInit {
   ngOnInit(): void {}
 
   ngOnChanges(): void {
+    this.taskNodesData = [];
+
     if (this.task.id) {
       this.taskService.getChildTasks(this.task.id).subscribe((tasks) => {
         const childTasks: TaskNode[] = [];

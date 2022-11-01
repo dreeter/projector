@@ -16,7 +16,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProjectService } from './services/project.service';
 import { TaskService } from './services/task.service';
 import { NavigationService } from './services/navigation.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
 import { AuthModule } from './auth/auth.module';
 import { ProjectHeaderListComponent } from './project/project-header-list/project-header-list.component';
@@ -26,6 +26,7 @@ import { NavTreeComponent } from './nav-tree/nav-tree.component';
 import { EditTaskComponent } from './edit-task/edit-task.component';
 import { TaskTreeComponent } from './task/task-tree/task-tree.component';
 import { MatTreeModule } from '@angular/material/tree';
+import { NetworkInterceptor } from './services/network.interceptor.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,12 @@ import { MatTreeModule } from '@angular/material/tree';
     AngularMaterialModule,
     MatTreeModule,
   ],
-  providers: [ProjectService, TaskService, NavigationService],
+  providers: [
+    ProjectService,
+    TaskService,
+    NavigationService,
+    { provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
@@ -10,32 +17,22 @@ import { AuthService } from '../services/auth.service';
 })
 export class AuthComponent implements OnInit {
   authForm: FormGroup = {} as FormGroup;
-  isLoginMode: boolean = true;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.authForm = new FormGroup({
-      email: new FormControl(null),
-      password: new FormControl(null),
-      passwordConfirmation: new FormControl(null),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
     });
   }
 
-  onSwitchMode() {
-    this.isLoginMode = !this.isLoginMode;
-  }
-
   onSubmit() {
-    //get email and password
-
-    if (!this.isLoginMode) {
-      //get password confirmation
-    } else {
-      this.authService.login();
-      this.router.navigate(['/']);
-    }
-
-    //call the authorization service to login or register the user
+    //call the authorization service to login the user
+    this.authService.login();
+    this.router.navigateByUrl('/home');
   }
 }
