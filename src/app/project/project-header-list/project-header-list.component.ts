@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Project } from '../../models/project.model';
 import { ProjectService } from '../../services/project.service';
@@ -13,14 +13,20 @@ export class ProjectHeaderListComponent implements OnInit, OnDestroy {
   projects: Project[] = [];
   deleteSubscription: Subscription = {} as Subscription;
 
-  constructor(private projectService: ProjectService) {}
+  constructor(
+    private projectService: ProjectService,
+    private changeDetector: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.projectService.getProjects().subscribe({
-      next: (projects) => {
+      next: (projects: Project[]) => {
         this.projects = projects as Project[];
+        // this.changeDetector.detach();
+        // this.changeDetector.detectChanges();
+        // this.changeDetector.reattach();
       },
-      error: (error) => {
+      error: (error: Error) => {
         //TODO: display an error message to the user
         console.log(error);
       },
@@ -36,6 +42,7 @@ export class ProjectHeaderListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    console.log('Project header being destroyed');
     this.deleteSubscription.unsubscribe();
   }
 }

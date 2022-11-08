@@ -1,4 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Project } from '../models/project.model';
@@ -20,7 +26,8 @@ export class ProjectComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private projectService: ProjectService,
     private router: Router,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +37,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
       //make a call to get this project
       this.projectService.getProject(params['id']).subscribe((project) => {
         this.project = project;
+        this.changeDetector.detach();
+        this.changeDetector.detectChanges();
+        this.changeDetector.reattach();
 
         //reset the navigation tree
         this.navigationService.resetNavTree();

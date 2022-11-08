@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationService } from './services/navigation.service';
 import { ProjectService } from './services/project.service';
 import { NetworkInterceptor } from './services/network.interceptor.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ export class AppComponent {
 
   constructor(
     private navigationService: NavigationService,
-    private spinnerService: NetworkInterceptor
+    private spinnerService: NetworkInterceptor,
+    private authService: AuthService
   ) {}
 }

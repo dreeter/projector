@@ -28,9 +28,7 @@ export class TaskService {
   }
 
   getTask(id: number): Observable<Task> {
-    return this.http.get<Task>(`http://localhost:3000/task/${id}`, {
-      withCredentials: true,
-    });
+    return this.http.get<Task>(`http://localhost:3000/task/${id}`);
   }
 
   updateTask(task: Task): void {
@@ -57,10 +55,7 @@ export class TaskService {
 
   getChildTasks(parent_id: number): Observable<Task[]> {
     return this.http.get<Task[]>(
-      `http://localhost:3000/task/children/${parent_id}`,
-      {
-        withCredentials: true,
-      }
+      `http://localhost:3000/task/children/${parent_id}`
     );
   }
 }

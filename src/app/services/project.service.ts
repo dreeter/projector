@@ -27,15 +27,13 @@ export class ProjectService {
   }
 
   getProject(id: number): Observable<Project> {
-    return this.http.get<Project>(`http://localhost:3000/project/${id}`, {
-      withCredentials: true,
-    });
+    console.log('Getting Project');
+    return this.http.get<Project>(`http://localhost:3000/project/${id}`);
   }
 
   getProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>('http://localhost:3000/project', {
-      withCredentials: true,
-    });
+    console.log('Getting Projects');
+    return this.http.get<Project[]>('http://localhost:3000/project');
   }
 
   updateProject(project: Project): void {

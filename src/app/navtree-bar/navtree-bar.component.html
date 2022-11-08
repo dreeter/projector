@@ -1,0 +1,7 @@
+<div class="progress-div">
+  <ul class="progress">
+    <li *ngFor="let navBranch of navTree" (click)="onNavigate(navBranch.url)">
+      {{ navBranch.name }}
+    </li>
+  </ul>
+</div>

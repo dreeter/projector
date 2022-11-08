@@ -27,6 +27,7 @@ import { EditTaskComponent } from './edit-task/edit-task.component';
 import { TaskTreeComponent } from './task/task-tree/task-tree.component';
 import { MatTreeModule } from '@angular/material/tree';
 import { NetworkInterceptor } from './services/network.interceptor.service';
+import { NavtreeBarComponent } from './navtree-bar/navtree-bar.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { NetworkInterceptor } from './services/network.interceptor.service';
     NavTreeComponent,
     EditTaskComponent,
     TaskTreeComponent,
+    NavtreeBarComponent,
   ],
   imports: [
     BrowserModule,

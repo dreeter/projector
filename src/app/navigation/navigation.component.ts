@@ -7,7 +7,6 @@ import { NetworkInterceptor } from '../services/network.interceptor.service';
 import { LoadingService } from '../services/loading.service';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css'],

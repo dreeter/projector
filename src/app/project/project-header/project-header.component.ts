@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -27,7 +28,8 @@ export class ProjectHeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private projectService: ProjectService,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
