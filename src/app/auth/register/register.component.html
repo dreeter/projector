@@ -36,16 +36,22 @@
         </div>
 
         <div fxLayout="row">
-          <button type="submit" mat-raised-button color="primary">
-            Sign Up
+          <button type="submit" mat-raised-button color="primary" fxFill>
+            Sign Up&nbsp;&nbsp;
+            <mat-icon>how_to_reg</mat-icon>
           </button>
+        </div>
+
+        <div fxLayout="row">
           <button
             type="button"
             [routerLink]="['/auth']"
             mat-button
             color="primary"
+            fxFill
           >
-            Login
+            Login&nbsp;&nbsp;
+            <mat-icon>login</mat-icon>
           </button>
         </div>
       </form>

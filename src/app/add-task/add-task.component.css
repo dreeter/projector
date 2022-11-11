@@ -25,3 +25,7 @@ div {
 button {
     width: 150px;
 }
+
+mat-icon {
+    font-size: 20px;
+}

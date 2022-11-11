@@ -37,9 +37,9 @@ export class ProjectComponent implements OnInit, OnDestroy {
       //make a call to get this project
       this.projectService.getProject(params['id']).subscribe((project) => {
         this.project = project;
-        this.changeDetector.detach();
-        this.changeDetector.detectChanges();
-        this.changeDetector.reattach();
+        // this.changeDetector.detach();
+        // this.changeDetector.detectChanges();
+        // this.changeDetector.reattach();
 
         //reset the navigation tree
         this.navigationService.resetNavTree();

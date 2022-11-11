@@ -25,12 +25,15 @@
         mat-stroked-button
         color="primary"
       >
+        <mat-icon>edit</mat-icon>
         Edit
       </button>
       <button mat-stroked-button color="accent" (click)="toggleAddMode()">
+        <mat-icon>playlist_add</mat-icon>
         {{ addTaskMode ? "Discard Task" : "Add Task" }}
       </button>
       <button mat-stroked-button color="warn" (click)="onDelete()">
+        <mat-icon>delete</mat-icon>
         Delete
       </button>
     </mat-action-row>

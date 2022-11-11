@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { AuthGuardService } from './auth-guard.service';
 
 export interface LoginInfo {
@@ -19,13 +19,13 @@ export interface RegistrationInfo {
 })
 export class AuthService {
   isAuthenticated: boolean = false;
-
   jwtToken: string = '';
-
   loginSuccess: Subject<boolean> = new Subject<boolean>();
   loginFailure: Subject<Error> = new Subject<Error>();
   registrationSuccess: Subject<boolean> = new Subject<boolean>();
   registrationFailure: Subject<Error> = new Subject<Error>();
+
+  user: any = {};
 
   constructor(private http: HttpClient) {
     console.log('Authentication Service constructing');
@@ -36,6 +36,7 @@ export class AuthService {
       next: (response: any) => {
         console.log(response);
         console.log('Successful Login');
+        this.user = response;
         this.isAuthenticated = true;
         this.jwtToken = response.accessToken;
         this.loginSuccess.next(true);
