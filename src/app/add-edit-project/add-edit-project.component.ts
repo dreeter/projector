@@ -74,6 +74,7 @@ export class AddEditProjectComponent implements OnInit {
 
     this.projectAddedSub = this.projectService.projectAdded.subscribe(
       (added: boolean) => {
+        console.log('Navigating back after adding project');
         this.navigationService.back();
       }
     );

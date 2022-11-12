@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable, Subscription } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -12,7 +18,7 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css'],
 })
-export class NavigationComponent {
+export class NavigationComponent implements OnInit, OnDestroy {
   showSpinner: boolean = false;
   loginSuccessSub: Subscription = new Subscription();
   username: string = '';
@@ -27,16 +33,24 @@ export class NavigationComponent {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private loadingService: LoadingService,
-    private authService: AuthService
+    private authService: AuthService,
+    private changeDetector: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.loadingService.isLoading.subscribe({
       next: (loading: boolean) => {
         this.showSpinner = loading;
+        this.changeDetector.detectChanges();
       },
     });
 
-    this.username = this.authService.user.username;
+    this.loginSuccessSub = this.authService.loginSuccess.subscribe(() => {
+      this.username = this.authService.user.username;
+    });
+  }
+
+  ngOnDestroy() {
+    this.loginSuccessSub.unsubscribe();
   }
 }

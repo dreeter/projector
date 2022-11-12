@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, shareReplay, Subject } from 'rxjs';
 import { AuthGuardService } from './auth-guard.service';
 
 export interface LoginInfo {

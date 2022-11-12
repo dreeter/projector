@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   FormGroup,
+  FormGroupDirective,
   FormControl,
   Validators,
-  ValidatorFn,
-  AbstractControl,
-  ValidationErrors,
 } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
+import { shareReplay, Subscription, take, takeUntil } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { LoginInfo } from '../services/auth.service';
 
@@ -20,10 +19,17 @@ import { LoginInfo } from '../services/auth.service';
 export class AuthComponent implements OnInit {
   loginSuccessSub: Subscription = {} as Subscription;
   loginFailureSub: Subscription = {} as Subscription;
+  registrationSuccessSub: Subscription = {} as Subscription;
 
   authForm: FormGroup = {} as FormGroup;
+  @ViewChild('formGroupDirective') formGroupDirective: FormGroupDirective =
+    {} as FormGroupDirective;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.authForm = new FormGroup({
@@ -36,28 +42,35 @@ export class AuthComponent implements OnInit {
 
     this.loginSuccessSub = this.authService.loginSuccess.subscribe(
       (success: boolean) => {
-        //show user success and allow them into the protected home route
-        console.log('Successful Login, navigating to home route');
         this.router.navigateByUrl('/home');
       }
     );
 
     this.loginFailureSub = this.authService.loginFailure.subscribe(
       (error: Error) => {
-        console.log('Login failure, showing user login error message');
-        //show user error logging them in
+        this.snackBar.open('Invalid Username or Password', undefined, {
+          duration: 3000,
+        });
+        this.authForm.reset();
+        this.formGroupDirective.resetForm();
       }
     );
+
+    this.registrationSuccessSub = this.authService.registrationSuccess
+      .pipe(shareReplay({ bufferSize: 1, refCount: true }))
+      .subscribe(() => {
+        this.snackBar.open('Registration Successful. Please Login', undefined, {
+          duration: 7000,
+        });
+      });
   }
 
-  onSubmit() {
+  onSubmit(formGroupDirective: FormGroupDirective) {
     const loginInfo: LoginInfo = {
       username: this.authForm.get('username')!.value,
       password: this.authForm.get('password')!.value,
     };
 
-    //call the authorization service to login the user
-    //login will make call to login service, login service will return authentication subject
     this.authService.login(loginInfo);
   }
 

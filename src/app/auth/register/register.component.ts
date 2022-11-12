@@ -7,9 +7,10 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { throwToolbarMixedModesError } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { RegistrationInfo } from '../../services/auth.service';
 
@@ -24,7 +25,11 @@ export class RegisterComponent implements OnInit {
   registerSuccess: Subscription = {} as Subscription;
   registerFailure: Subscription = {} as Subscription;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -42,14 +47,19 @@ export class RegisterComponent implements OnInit {
 
     this.registerSuccess = this.authService.registrationSuccess.subscribe(
       (success: boolean) => {
-        //registration is successful, navigate to /auth
         this.router.navigateByUrl('/auth');
       }
     );
 
     this.registerFailure = this.authService.registrationFailure.subscribe(
       (error: Error) => {
-        //registration failed, give user an error message
+        this.snackBar.open(
+          'Registration Unsuccessful. Username is Already in Use',
+          undefined,
+          {
+            duration: 7000,
+          }
+        );
       }
     );
   }

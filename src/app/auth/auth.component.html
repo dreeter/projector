@@ -7,7 +7,8 @@
         fxLayout="column"
         fxLayout.lt-md="column"
         [formGroup]="authForm"
-        (ngSubmit)="onSubmit()"
+        (ngSubmit)="onSubmit(formGroupDirective)"
+        #formGroupDirective="ngForm"
       >
         <div fxLayout="column" fxLayout.lt-lg="column">
           <mat-form-field appearance="fill">
