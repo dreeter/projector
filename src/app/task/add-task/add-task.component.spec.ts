@@ -1,17 +1,17 @@
 // import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-// import { TaskHeaderComponent } from './task-header.component';
+// import { AddTaskComponent } from './add-task.component';
 
-// describe('TaskItemComponent', () => {
-//   let component: TaskHeaderComponent;
-//   let fixture: ComponentFixture<TaskHeaderComponent>;
+// describe('AddEditTaskComponent', () => {
+//   let component: AddTaskComponent;
+//   let fixture: ComponentFixture<AddTaskComponent>;
 
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({
-//       declarations: [TaskHeaderComponent],
+//       declarations: [AddTaskComponent],
 //     }).compileComponents();
 
-//     fixture = TestBed.createComponent(TaskHeaderComponent);
+//     fixture = TestBed.createComponent(AddTaskComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

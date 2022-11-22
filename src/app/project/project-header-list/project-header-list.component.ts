@@ -25,6 +25,7 @@ export class ProjectHeaderListComponent implements OnInit, OnDestroy {
         // this.changeDetector.detach();
         // this.changeDetector.detectChanges();
         // this.changeDetector.reattach();
+        console.dir(this.projects);
       },
       error: (error: Error) => {
         //TODO: display an error message to the user

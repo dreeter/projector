@@ -2,10 +2,10 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { PRIORITY, STATUS, TaskInfo } from '../models/taskinfo.model';
-import { NavigationService } from '../services/navigation.service';
-import { TaskService } from '../services/task.service';
-import { Task } from '../models/task.model';
+import { PRIORITY, STATUS, TaskInfo } from '../../models/taskinfo.model';
+import { NavigationService } from '../../services/navigation.service';
+import { TaskService } from '../../services/task.service';
+import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-edit-task',

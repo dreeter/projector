@@ -40,6 +40,7 @@ export class ProjectComponent implements OnInit, OnDestroy {
         // this.changeDetector.detach();
         // this.changeDetector.detectChanges();
         // this.changeDetector.reattach();
+        console.dir(this.project);
 
         //reset the navigation tree
         this.navigationService.resetNavTree();

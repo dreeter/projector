@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Project } from '../models/project.model';
-import { PRIORITY, STATUS, TaskInfo } from '../models/taskinfo.model';
-import { NavigationService } from '../services/navigation.service';
-import { ProjectService } from '../services/project.service';
+import { Project } from '../../models/project.model';
+import { PRIORITY, STATUS, TaskInfo } from '../../models/taskinfo.model';
+import { NavigationService } from '../../services/navigation.service';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-add-edit-project',
